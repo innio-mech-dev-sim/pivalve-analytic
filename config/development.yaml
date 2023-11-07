@@ -1,0 +1,28 @@
+# APP
+HOST: '127.0.0.1'
+DEBUG: True
+PORT: 8051
+REQUESTS_PATHNAME_PREFIX: '/'
+
+# OIDC
+OPEN_ID_REDIRECT_URI:
+  J-Engine: 'http://127.0.0.1:8051/callback'
+  W-Engine: 'http://127.0.0.1:8051/callback'
+
+SCHEMA_COMMENTS: 'dashboard'
+SCHEMA_FMEA: 'fmea_dev'
+SCHEMA_VIBRATIONS: 'vibration_dev'
+
+# S3 PREFECT
+S3_BUCKET: staging-myplant-io-reliability-management-system
+AWS_S3_BUCKET: 's3://staging-myplant-io-reliability-management-system/data_v1/'
+
+# CLICKHOUSE
+CLICKHOUSE:
+  HOST: localhost
+
+# KAFKA
+KAFKA:
+  KAFKA_SCHEMA_REGISTRY_ADDRESS: 'http://127.0.0.1:8081/'
+  KAFKA_BOOTSTRAP_SERVERS: '127.0.0.1:9092/'
+  DISABLE_KAFKA: True

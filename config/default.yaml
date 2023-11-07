@@ -1,0 +1,364 @@
+# APP
+REQUESTS_PATHNAME_PREFIX: '/'
+HOST: '0.0.0.0'
+DEBUG: False
+PORT: 8051
+
+# OIDC
+MYPLANT_CLIENT_ID: 'KNFZR26RLJQ6N'
+MYPLANT_CLIENT_SECRET: '2f93292d6d99ab6bc794ae5711c614f2'
+OPEN_ID_CONFIGURATION_URL: 'https://myplant.io/api/oauth/.well-known/openid-configuration'
+MYPLANT_AUTH_DATA_ENDPOINT: 'https://myplant.io/api/auth'
+OPEN_ID_REDIRECT_URI: ~
+ALLOWED_AUTH_GROUP_SETS:
+  - [ 'Admin', 'Internal' ]
+  - [ 'User-EngineeringPlatformsDashboard', 'Internal' ]
+
+SUPER_USER: 'function::Admin-EngineeringPlatformsDashboard'
+
+# Page
+TITLE: 'Reliability Management'
+
+# Database
+NAME_DB: 'rel_tableau'
+USER_DB: 'matur_autom_tool'
+#PASSWORD_DB: 'XoZ.qX9p'
+PASSWORD_DB: 'uMYqDHaDHZtH4Bsd95pJJrBPVChesJQG'
+#HOST_DB: '172.17.214.70'
+HOST_DB: 'reliablity-postgresql.apps.int.myplant.io'
+PORT_DB: 5432
+
+SCHEMA_DB: 'maturity_prod'
+SCHEMA_COMMENTS: 'dashboard'
+SCHEMA_FMEA: 'fmea'
+SCHEMA_VIBRATIONS: 'vibration'
+
+TABLES:
+  FLEETS: 'fleets'
+  FLEET_DEFINITION: 'fleet_definition'
+  TARGETS: 'kpis'
+  FV_POWER_HIST: 'field_validation_power_histograms'
+  FV_OPH_STARTS_POWER: 'field_validation_ophstarts_power'
+  FV_OIL_ANALYSIS_DATA: 'field_validation_oil_analysis'
+  FV_ENGINE_PLOTS: 'field_validation_engine_plots'
+  FV_COST: 'fv_cost'
+  FM_POWER_HIST: 'fleet_monitoring_power_histograms'
+  FM_OPH_STARTS_POWER: 'fleet_monitoring_ophstarts_power'
+  FM_OIL_ANALYSIS_DATA: 'fleet_monitoring_oil_analysis'
+  FM_ENGINE_PLOTS: 'fleet_monitoring_engine_plots'
+  BASELINE: 'baseline'
+  BASELINE_FLEET: 'baseline_fleet'
+  PRESERIES_KPIS: 'preseries_kpis'
+  PRESERIES_POWER_HIST: 'preseries_temp_power_histograms'
+  PRESERIES_OPH_STARTS_POWER: 'preseries_temp_ophstarts_power'
+  PRESERIES_OIL_ANALYSIS_DATA: 'preseries_oil_analysis'
+  PRESERIES_ENGINE_PLOTS: 'preseries_engine_plots_temp'
+  TRIP_DATA_ITEM_VIEWS: 'trip_data_item_views'
+  TRIP_EXPERT_NOTES: 'trip_expert_notes'
+  TRIP_EXPERT_SCOPE: 'trip_expert_scope'
+  TRIP_EXPERT_PRIMARY_TRIP: 'trip_expert_primary_alarm'
+  ASSET_INFO_VIBRATION: 'asset_info'
+  PROD_MAT_FILTERS: 'prod_mat_filters'
+  FRACAS_LABELS: 'fracas_lables_temp'
+  MAX_ID_VAL: 'max_id_val'
+  RELEASE_NOTES: 'release_notes'
+  TARGET_VALUE: 'target_value'
+  COMMENTS: 'comments'
+
+
+# API urls
+QTOOL_URL:
+  J-Engine: 'https://quality.myplant.io/'
+  W-Engine: 'https://w-quality.myplant.io/'
+FRACAS_URL: 'https://fracas.myplant.io/'
+MYPLANT_URL: 'https://myplant.io/app/'
+MYPLANT_APP_ID: 'KDPN9J6W4FICQ'
+MYPLANT_APP_SECRET: 'b9746f2a948d3a5a8a049f17db225356'
+MYPLANT_GRAPHQL_URL: 'https://myplant.io/api/graphql'
+
+GITHUB_ISSUES: 'https://github.com/innio-mech-dev-sim/Reliability-Management-System/issues'
+GITHUB_WIKI: 'https://github.com/innio-mech-dev-sim/Reliability-Management-System/wiki'
+
+SHAREPOINT_CLIENT_ID: '7967d69a-81ca-44ca-bafa-d757be10d547'
+SHAREPOINT_SECRET: 'NrMoCRqq9sq+Q68Q24DEjKbJ2Ftvhm23Pqg9h4sN2H8='
+
+
+# Maintenance Database
+NAME_DB_M: 'pgsdwh'
+USER_DB_M: 'Giovanni.Brighenti'
+PASSWORD_DB_M: 'lYJ3nI9dV8Fv9cvk2jE1W4qvnh2WQi0vnxWP7KxlVkZTnEtReya'
+HOST_DB_M: 'innio-sql-dwh-prod.database.windows.net'
+PORT_DB_M: 1433
+SCEMA_DB_M: 'myplant'
+EVT_TBL_M: 'maintenance_events_dmp_events'
+ACT_TBL_M: 'maintenance_events_dmp_scoped_activities'
+
+ACT_ID_TRANSLATION: 'https://myplant.io/api/system/localization?devMode=false&groupResult=true&groups=dmp-activities&languages=en'
+TAX_ID_TRANSLATION: 'https://myplant.io/app/ws/maintenance-plans/plan/taxonomy'
+
+AWS_DEFAULT_REGION: 'us-east-1'
+AWS_S3_BUCKET: 's3://myplant-io-reliability-management-system/data_v1/'
+AWS_PROFILE: 'az-myplant-prod'
+
+START_ANALYSIS_BUCKET:
+  FOLDER_PATH: 'prefect/start_analysis_temporal/'
+  TIMESERIES_DATA: 'timeseries_data'
+  SM_DATA: 'sm_data'
+  PLOT_DATA: 'plot_data'
+  OVERVIEW:  'program_start_overview'
+
+PLOTITEMS:
+  FV_FOLDER_PATH: 'data_v1/prefect/data_items/field_validation/'
+  FM_FOLDER_PATH: 'data_v1/prefect/data_items/fleet_monitoring/'
+  PRESERIES_FOLDER_PATH: 'data_v1/prefect/data_items/preseries_temporal/'
+
+OP_PROFILES_DATA:
+  FV_FOLDER_PATH: 'data_v1/prefect/op_profiles_data/fv_temporal'
+  FM_FOLDER_PATH: 'data_v1/prefect/op_profiles_data/fm_temporal'
+  PRESERIES_FOLDER_PATH: 'data_v1/prefect/op_profiles_data/preseries_temporal'
+  OPH_STARTS: 'oph_starts_temporal'
+
+SEISMIC_APP:
+  INPUT: 'seismic_analysis_input'
+  OUTPUT: 'seismic_analysis_output'
+
+Q_CASES_S3_SUBFOLDER: 'q_cases'
+Q_ISSUES_S3_SUBFOLDER: 'q_issues'
+RELIABILITY_S3_SUBFOLDER: 'reliability'
+SAFETY_CASES_S3_SUBFOLDER: 'safety_cases'
+SYSTEM_HIERARCHY_S3_SUBFOLDER: 'system_hierarchy'
+
+QTOOL_PROBLEM_TABLE:
+  J-Engine: 'quality_tool_problem'
+  W-Engine: 'w_quality_tool_problem'
+
+QTOOL_ISSUE_TABLE:
+  J-Engine: 'quality_tool_issue'
+  W-Engine: 'w_quality_tool_issue'
+
+QTOOL_USERS_TABLE:
+  J-Engine: 'quality_tool_users'
+  W-Engine: 'w_quality_tool_users'
+
+QTOOL_TIME_POINTS_TABLE:
+  J-Engine: 'quality_tool_problem_time_points'
+  W-Engine: 'w_quality_tool_problem_time_points'
+
+QTOOL_ASSOCIATED_ASSET_TABLE:
+  J-Engine: 'quality_tool_associated_asset'
+  W-Engine: 'w_quality_tool_associated_asset'
+
+FRACAS_TABLES:
+  ISSUES: 'fracas_tool_issue'
+  ISSUE_LABELS: 'fracas_tool_issue_labels'
+  LABEL: 'fracas_tool_label'
+  USERS: 'fracas_tool_users'
+  TEST_BENCH: 'fracas_tool_test_bench'
+
+SBOM:
+  HOST: 'jenwap041\docusql'
+  HOST_IP: '172.30.1.80\docusql' # use for vpn connection, since DNS not reachable
+  USER: 'rms_user'
+  PASSWORD: '7JvJ5vWLXEuM0Ulrk94Z'
+  DATABASE: 'DWH'
+  TABLE_NAME: 'tbl_SBOM_HISTORICAL'
+  SCHEMA: 'dbo'
+
+WEIBULLS:
+  SCHEMA: 'weibulls'
+  J-Engine:
+    WEIBULL_IDS: 'weibulls'
+    WEIBULL_EVENTS: 'weibull_events'
+  W-Engine:
+    WEIBULL_IDS: 'w_weibulls'
+    WEIBULL_EVENTS: 'w_weibull_events'
+  MAX_WEIBULLS_PER_PLOT: 4
+
+REL_ANALYSIS:
+  SCHEMA: 'rel_analysis_dev'
+  LOG_TABLE: 'analysis_log'
+  AUL_TABLE: 'auls'
+  MANUAL_AUL_TABLE: 'manual_auls'
+  MANUAL_FLEET_TABLE: 'manual_fleets'
+  FAILURES_TABLE: 'failures'
+  ACTIVITIES_TABLE: 'activities'
+
+SBOM_AUTO_WEIBULL:
+  SCHEMA: 'sbom_for_weibulls'
+  SBOM: 'hist_sbom'
+  MT_EVENTS: 'mt_activities'
+
+# Scheduler settings
+SCHEDULER:
+  OP_PROFILE:
+    TYPE: 'cron'
+    HOUR: 0
+  WHOLE_FLEET_SM_ANALYSIS:
+    TYPE: 'cron'
+    HOUR: 0
+  BASELINE_FLEET_DATA:
+    TYPE: 'cron'
+    HOUR: 0
+  FIELD_VAL_KPI:
+    TYPE: 'cron'
+    HOUR: 0
+  FLEET_ALARMS:
+    TYPE: 'cron'
+    HOUR: 0
+  FLEET:
+    TYPE: 'cron'
+    HOUR: 0
+  WK_BASE_STATE_MACHINE:
+    TYPE: 'cron'
+    HOUR: 0
+  MY_PLANT_FLEET:
+    TYPE: 'cron'
+    HOUR: 0
+  FLEET_RELIABILITY_DATA:
+    TYPE: 'cron'
+    HOUR: 0
+  FORECASTING:
+    TYPE: 'cron'
+    DAY_OF_WEEK: 'sat'
+  DATA_ITEM_PLOTS:
+    TYPE: 'cron'
+    HOUR: 0
+  VALIDATION_MONITORING_FLEET_DATA:
+    TYPE: 'cron'
+    HOUR: 0
+  MAINTENANCE_DATA_LOADER:
+    TYPE: 'cron'
+    HOUR: 0
+  OIL_COOLANT:
+    TYPE: 'cron'
+    HOUR: 0
+  OP_PROFILES:
+    TYPE: 'cron'
+    HOUR: 0
+  FRACAS_DATA:
+    TYPE: 'interval'
+    MINUTES: 60
+  SYSTEM_HIERARCHY:
+    TYPE: 'cron'
+    HOUR: 0
+  INFO_VIBRATION:
+    TYPE: 'cron'
+    HOUR: 0
+  GET_WEIBULL_DATA:
+    TYPE: 'interval'
+    MINUTES: 120
+  Q_CASES_DATA:
+    TYPE: 'interval'
+    MINUTES: 60
+  Q_ISSUES_DATA:
+    TYPE: 'interval'
+    MINUTES: 60
+
+    GET_WEIBULL_DATA: 0
+#    BASELINE_FLEET_DATA: 0
+    FIELD_VAL_KPI: 0
+    FLEET_ALARMS: 0
+#    WHOLE_FLEET_SM_ANALYSIS: 'cron'
+    FLEET: 0
+  HOUR:
+    GET_WEIBULL_DATA: 0
+    BASELINE_FLEET_DATA: 0
+    FIELD_VAL_KPI: 0
+    FLEET_ALARMS: 0
+    WHOLE_FLEET_SM_ANALYSIS: 0
+    FLEET: 0
+
+
+#  W-Engine:
+#    SBOM: 'hist_sbom'
+#    MT_EVENTS: 'mt_activities'
+
+
+# S3 PREFECT
+S3_BUCKET: staging-myplant-io-reliability-management-system
+S3_FOLDER: data_v1/prefect
+POLE_SLIP_MESSAGES_S3_FOLDER: data_v1/prefect/pole_slip_messages
+POLE_SLIP_FILE: pole_slip_messages
+FRT_MESSAGES_S3_FOLDER: data_v1/prefect/frt_messages
+GRID_OUTPUT_S3_FOLDER: data_v1/prefect/grid_events
+
+SAFETY_KPIS_USER_GROUP: 'function::RMS-Safety-KPIs'
+
+FLAGSMITH_KEY: J4k5wFwukbTKHez5UoxpTU
+
+# CLICKHOUSE
+CLICKHOUSE:
+  HOST: clickhouse.clickhouse
+
+  PORT: 9000
+
+  CREDENTIALS:
+    USER: reliability
+    PASSWORD: reliability
+
+  SETTINGS:
+    use_numpy: True
+    max_query_size: 256000000000
+    max_ast_depth: 100000
+    max_ast_elements: 5000000
+    max_expanded_ast_elements: 50000000
+
+  DATABASES:
+    MYPLANT:
+      NAME: myplant
+
+      TABLE_NAMES:
+        LOW_RES_TIME_SERIES: ts_data_double
+        HIGH_RES_TIME_SERIES: ts_data_double_highres
+
+    RELIABILITY:
+      NAME: reliability
+
+      TABLE_NAMES:
+        ASSETS: assets
+        DATA_ITEMS: data_items
+        HSLF: hslf_temporal
+        HSLF_FLEET: hslf_fleet_temporal
+        SPARKPLUG_DATA_CYCLES: sparkplug_data_cycles
+
+      TABLE_NAME_PREFIXES:
+
+        REL_DATA:
+          PREFIX: rel_data
+          FLEETS:
+            FV: fv_temporal
+            FM: fm_temporal
+            BF: baseline_temporal
+            PRESERIES: preseries_temporal
+
+        STATEMACHINE:
+          FV: fv_temporal
+          FM: fm_temporal
+          BF: baseline_temporal
+          PRESERIES: preseries_temporal
+
+        ENGINE_RUN:
+          FV: run_classification_field_validation_temporal
+          FM: run_classification_fleet_monitoring_temporal
+          BF: run_classification_baseline_temporal
+          PRESERIES: run_classification_preseries_temporal
+
+# PREFECT
+PREFECT:
+  PREFECT_PROJECT_NAME: reliability-management-system
+  PREFECT_API_URL: https://prefect-dev.staging.myplant.io/graphql
+  FLOW_NAMES:
+    WK_CALIBRATION_DATA: fetch_wk_engine_calibration_data_upload_to_clickhouse
+    SYSTEM_HIERARCHY_DATA: system_hierarchy_data_download
+    SAFETY_CASES_DATA: safety_cases_data_download
+    Q_ISSUES_DATA: q_issues_data_download
+    Q_CASES_DATA: q_cases_data_download
+    OP_PROFILES_DATA: op_profiles_data
+    OIL_COOLANT_DATA: oil_coolant_data
+    FRACAS_DATA_DOWNLOAD: fracas_data_download
+    FLEET_RELIABILITY_DATA: fleet_reliability_data_download
+    BASELINE_FLEET_DATA_CLICKHOUSE: baseline_fleet_data_downloader
+    FLEET_MONITORING_DATA_CLICKHOUSE: fleet_monitoring_data_downloader
+    FIELD_VALIDATION_DATA_CLICKHOUSE: field_validation_data_downloader
+    PRESERIES_FLEET_DATA_CLICKHOUSE: preseries_fleet_data_downloader
+
