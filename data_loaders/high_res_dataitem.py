@@ -86,7 +86,6 @@ class DataItemClient:
         return df.compute()
 
 
-
 def create_query_list(asset_id, data_items_ids, start_time, end_time, interval: Optional[int] = 1):
     queries = []
     from_ts = start_time
@@ -107,7 +106,7 @@ def create_query_list(asset_id, data_items_ids, start_time, end_time, interval: 
     return queries
 
 
-def to_timestamp(dt: pd.Timestamp, coerce:bool=True):
+def to_timestamp(dt: pd.Timestamp, coerce: bool = True):
     """Converts pandas datetime object to timestamp in ms"""
     if isinstance(dt, pd.Timestamp):
         return int(round(dt.value / 1e6))
@@ -174,8 +173,10 @@ if __name__ == "__main__":
     #     else:
     #         df_pp = df_pp - df_pp.iloc[0]
     #     return df_pp, df_raw
-
-    # df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client)
+    pi_dataitems = [20310 + i for i in range(20)]
+    data_items = pi_dataitems + [161, 102, 107, 20307]
+    df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client,
+                                        interval=1800, data_items=data_items, sampling_points=1000, data_range=365)
 
     # fig = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
     # fig1 = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
@@ -188,22 +189,22 @@ if __name__ == "__main__":
     # fig.show()
     # fig1.show()
 
-    training_data = pd.DataFrame()
-    end_date = datetime.strptime(date_end, '%Y-%m-%d')
-    start_date = end_date - timedelta(days=40)
-    time_delta = timedelta(days=10)
-    current_date = start_date
-    while current_date < end_date:
-        date_end = current_date.strftime('%Y-%m-%d')
-        df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client)
-        training_data = pd.concat([training_data, df_pp.add_suffix('_' + date_end)], axis=1)
-        current_date += time_delta
-
-    # training_data = training_data.T.reset_index(drop=True).T
-    fig = go.Figure()
-    for i, column in enumerate(training_data.columns):
-
-        fig.add_trace(go.Scattergl(x=training_data.index, y=training_data[column], mode='lines', name=column))
-    # fig.add_trace(go.Scatter(x=df1['time'], y=df1['delta_ewm'], mode='lines', name='valve_duration'))
-    fig.show()
-    training_data.to_csv(f'new_training_data_{asset_id}.csv')
+    # training_data = pd.DataFrame()
+    # end_date = datetime.strptime(date_end, '%Y-%m-%d')
+    # start_date = end_date - timedelta(days=40)
+    # time_delta = timedelta(days=10)
+    # current_date = start_date
+    # while current_date < end_date:
+    #     date_end = current_date.strftime('%Y-%m-%d')
+    #     df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client)
+    #     training_data = pd.concat([training_data, df_pp.add_suffix('_' + date_end)], axis=1)
+    #     current_date += time_delta
+    #
+    # # training_data = training_data.T.reset_index(drop=True).T
+    # fig = go.Figure()
+    # for i, column in enumerate(training_data.columns):
+    #
+    #     fig.add_trace(go.Scattergl(x=training_data.index, y=training_data[column], mode='lines', name=column))
+    # # fig.add_trace(go.Scatter(x=df1['time'], y=df1['delta_ewm'], mode='lines', name='valve_duration'))
+    # fig.show()
+    # training_data.to_csv(f'new_training_data_{asset_id}.csv')

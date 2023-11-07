@@ -15,18 +15,20 @@ import numpy as np
 
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 
-with open('config.yaml', 'r') as f:
-    CONFIG = yaml.load(f, Loader=yaml.SafeLoader)
+with open('config_analytic.yaml', 'r') as f:
+    CONFIG_ANALYTIC = yaml.load(f, Loader=yaml.SafeLoader)
 
-pi_dataitems = [20310 + i for i in range(20)]
-data_items = pi_dataitems + [161, 102, 107, 20307]
-data_range = 365  # days to download before
-sampling_points = 1000
-interval = 1800
+# pi_dataitems = [20310 + i for i in range(20)]
+# data_items = pi_dataitems + [161, 102, 107, 20307]
+# data_range = 365  # days to download before
+# sampling_points = 1000
+# interval = 1800
+#
+# model_location = 'model/pivalve-analytic-5.pt'
+# degradation_limit = -6
 
-model_location = 'model/pivalve-analytic-5.pt'
-degradation_limit = -6
-
+pi_data_items = [int(x) for x in CONFIG_ANALYTIC['DOWNLOAD']['PI_VALVE_DATAITEMS'].split(',')]
+data_items = pi_data_items + [int(x) for x in CONFIG_ANALYTIC['DOWNLOAD']['ADDITIONAL_DATAITEMS'].split(',')]
 
 def get_layout():
     return html.Div(
@@ -129,32 +131,35 @@ def get_callbacks(app: Dash, data_client: DataItemsClient):
         Output({'name': ALL, 'type': 'failure-indicators'}, 'color'),
         Output('store-data', 'data'),
         Input('update-button', "n_clicks"),
-        Input('assetid-input', 'value'),
         Input('date-picker', 'value'),
+        State('assetid-input', 'value'),
     )
-    def update(_, asset_id, date_end):
+    def update(_, date_end, asset_id):
 
         if asset_id is None or date_end is None:
             raise PreventUpdate
 
-        df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client)
+        df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client,
+                                            sampling_points=CONFIG_ANALYTIC['DOWNLOAD']['SAMPLING_POINTS'],
+                                            data_range=CONFIG_ANALYTIC['DOWNLOAD']['DOWNLOAD_DATA_RANGE'],
+                                            data_items=data_items, interval=CONFIG_ANALYTIC['DOWNLOAD']['SAMPLING_INTERVAL'])
         df_raw = df_raw.loc[(df_raw[102] > 9300)]
 
         fig = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
         fig1 = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
 
         if df_pp.empty:
-            return fig, fig1, ['grey' for i in pi_dataitems], df_pp.to_dict('records')
+            return fig, fig1, ['grey' for i in pi_data_items], df_pp.to_dict('records')
         else:
 
-            predictions = get_predictions(model_loc=model_location, input_layer_dim=sampling_points,
-                                          input_data=df_pp, limit=degradation_limit)
+            predictions = get_predictions(model_loc=CONFIG_ANALYTIC['MODEL']['MODEL_LOCATION'], input_layer_dim=CONFIG_ANALYTIC['DOWNLOAD']['SAMPLING_POINTS'],
+                                          input_data=df_pp, limit=CONFIG_ANALYTIC['MODEL']['DEGRADATION_LIMIT'])
 
             fig = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
             fig1 = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
             fig.add_trace(go.Scatter(x=df_raw['time'], y=df_raw[20307], mode='lines', line=dict(color='#1F77B4', width=4),
                                      name=f'Cylinder Average'))
-            for i, di in enumerate(pi_dataitems):
+            for i, di in enumerate(pi_data_items):
                 color = 'grey' if predictions[i] == 0 else 'red'
                 fig.add_trace(go.Scatter(x=df_raw['time'], y=df_raw[di], mode='lines', line=dict(color=color),
                                          name=f'Cylinder {i+1}'))
@@ -173,7 +178,7 @@ def get_callbacks(app: Dash, data_client: DataItemsClient):
                 raise PreventUpdate
         df = pd.DataFrame(data)
         columns = dict()
-        for cyl, di in enumerate(pi_dataitems):
+        for cyl, di in enumerate(pi_data_items):
             columns[di] = f'cylinder_{cyl + 1}'
         df = df.rename(columns=columns)
         return dcc.send_data_frame(df.to_csv, "train_data.csv")
