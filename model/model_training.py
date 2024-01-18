@@ -84,7 +84,7 @@ if __name__ == '__main__':
     accuracy = (y_pred.round() == y_test).float().mean()
     print(f"Training Accuracy {accuracy}")
 
-    torch.save(model.state_dict(), 'pivalve-analytic-6.pt')
+    torch.save(model.state_dict(), 'pivalve-analytic-7.pt')
 
     test_data = np.loadtxt('test_data.csv', delimiter=',').T
     test_data = torch.tensor(test_data, dtype=torch.float32)

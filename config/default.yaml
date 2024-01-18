@@ -89,7 +89,7 @@ USER_DB_M: 'Giovanni.Brighenti'
 PASSWORD_DB_M: 'lYJ3nI9dV8Fv9cvk2jE1W4qvnh2WQi0vnxWP7KxlVkZTnEtReya'
 HOST_DB_M: 'innio-sql-dwh-prod.database.windows.net'
 PORT_DB_M: 1433
-SCEMA_DB_M: 'myplant'
+SCHEMA_DB_M: 'myplant'
 EVT_TBL_M: 'maintenance_events_dmp_events'
 ACT_TBL_M: 'maintenance_events_dmp_scoped_activities'
 
@@ -183,6 +183,16 @@ REL_ANALYSIS:
   FAILURES_TABLE: 'failures'
   ACTIVITIES_TABLE: 'activities'
 
+REL_ANALYSIS_NEW:
+  SCHEMA: 'rel_analysis_dev3'
+  LOG_TABLE: 'analysis_log'
+  AUL_TABLE: 'auls'
+  MANUAL_AUL_TABLE: 'manual_auls'
+  MANUAL_FLEET_TABLE: 'manual_fleets'
+  FAILURES_TABLE: 'failures_list'
+  ACTIVITIES_TABLE: 'activities'
+  ISSUE_TABLE: 'screening_issues'
+
 SBOM_AUTO_WEIBULL:
   SCHEMA: 'sbom_for_weibulls'
   SBOM: 'hist_sbom'
@@ -253,6 +263,9 @@ SCHEDULER:
   Q_ISSUES_DATA:
     TYPE: 'interval'
     MINUTES: 60
+  INFO_PARAMETERS:
+    TYPE: 'cron'
+    HOUR: 0
 
     GET_WEIBULL_DATA: 0
 #    BASELINE_FLEET_DATA: 0
@@ -320,6 +333,9 @@ CLICKHOUSE:
         HSLF: hslf_temporal
         HSLF_FLEET: hslf_fleet_temporal
         SPARKPLUG_DATA_CYCLES: sparkplug_data_cycles
+        CURRENT_PARAMETERS: fleet_parameter_monitoring_data_item_current_values
+        DEFAULT_PARAMETERS: fleet_parameter_monitoring_asset_defaults
+        METADATA_PARAMETERS: fleet_parameter_monitoring_parameters_meta
 
       TABLE_NAME_PREFIXES:
 

@@ -144,6 +144,10 @@ def prepare_engine_data(asset_id: int, date_end: str, data_client: DataItemsClie
 
 
 if __name__ == "__main__":
+    import yaml
+    with open('config_analytic.yaml', 'r') as f:
+        CONFIG_ANALYTIC = yaml.load(f, Loader=yaml.SafeLoader)
+    from model.load_model import get_predictions
 
     import plotly.graph_objects as go
     from constants.authenticator import auth
@@ -151,8 +155,43 @@ if __name__ == "__main__":
 
     data_client = DataItemsClient(auth=auth)
 
-    asset_id = 115964
-    date_end = '2023-10-13'
+    # asset_id = 117084
+
+
+
+    df = get_fleet_malfunctions(asset_ids=asset_ids)
+
+    # Convert dictionaries to dataframes
+
+
+    # Merge dataframes on 'Asset'
+
+
+    # queries = create_query_list(asset_id, [58, 107], to_timestamp(date_start),
+    #                             to_timestamp(date_end), interval=30)
+    #
+    # df_raw_ = DataItemClient(queries=queries, data_items_client=data_client).download().apply(pd.to_numeric).drop(columns='asset_id').reset_index(drop=True)
+    # # df_raw_ = df_raw_.loc[df_raw_[161] > 3000]
+    #
+    # # Assuming df is your DataFrame and 'col' is your column
+    # df_raw_['counter'] = 0
+    # counter = 0
+    # speed_limit = 1450  # replace with your certain value
+    #
+    # for i in range(1, len(df_raw_)):
+    #     if df_raw_.loc[i, 107] >= speed_limit and df_raw_.loc[i - 1, 107] < speed_limit:
+    #         counter += 1
+    #     df_raw_.loc[i, 'counter'] = counter
+    #
+    # df_grouped = df_raw_.groupby('counter').max()
+    #
+    # fig = go.Figure()
+    # for i, column in enumerate([58]):
+    #
+    #     fig.add_trace(go.Scattergl(x=df_grouped.index, y=df_grouped[column], mode='markers', name=column))
+    # # fig.add_trace(go.Scatter(x=df1['time'], y=df1['delta_ewm'], mode='lines', name='valve_duration'))
+    # fig.show()
+
 
     # def get_data(asset_id: int, date_end: str):
     #     df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client)
@@ -173,10 +212,10 @@ if __name__ == "__main__":
     #     else:
     #         df_pp = df_pp - df_pp.iloc[0]
     #     return df_pp, df_raw
-    pi_dataitems = [20310 + i for i in range(20)]
-    data_items = pi_dataitems + [161, 102, 107, 20307]
-    df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client,
-                                        interval=1800, data_items=data_items, sampling_points=1000, data_range=365)
+    # pi_dataitems = [20310 + i for i in range(20)]
+    # data_items = pi_dataitems + [161, 102, 107, 20307]
+    # df_raw, df_pp = prepare_engine_data(asset_id=asset_id, date_end=date_end, data_client=data_client,
+    #                                     interval=1800, data_items=data_items, sampling_points=1000, data_range=365)
 
     # fig = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)
     # fig1 = go.Figure().update_layout(margin=dict(l=10, r=10, t=10, b=10), height=300)

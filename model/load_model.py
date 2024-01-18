@@ -11,7 +11,8 @@ import torch.optim as optim
 from model.model_training import PiValveNeuralNetwork
 
 
-def get_predictions(model_loc: str, input_layer_dim: int, input_data: pd.DataFrame, limit: int = None):
+def get_predictions(model_loc: str, input_layer_dim: int, input_data: pd.DataFrame, warning_limit: int,
+                    alarm_limit: int):
 
     model = PiValveNeuralNetwork(input_layer_features=input_layer_dim)
     model.load_state_dict(torch.load(model_loc))
@@ -22,16 +23,17 @@ def get_predictions(model_loc: str, input_layer_dim: int, input_data: pd.DataFra
     # make class predictions with the model
     predictions = (model(test_data) > 0.5).int()
 
-    if limit is not None:
-        for pos, failure in enumerate(predictions):
-            if failure[0].item() == 1 and min(test_data[pos]) > limit:
-                predictions[pos][0] = 0
+    for pos, failure in enumerate(predictions):
+        if failure[0].item() == 1 and test_data[pos][-1] > warning_limit:
+            predictions[pos][0] = 0
+        if failure[0].item() == 1 and test_data[pos][-1] < alarm_limit:
+            predictions[pos][0] = 2
 
     return predictions
 
 if __name__ == '__main__':
 
-    from data_loaders.high_res_dataitem import DataItemsClient, prepare_engine_data
+    from data_sources.high_res_dataitem import DataItemsClient, prepare_engine_data
     import plotly.graph_objects as go
     from constants.authenticator import auth
     from datetime import datetime, timedelta

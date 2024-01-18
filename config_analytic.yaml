@@ -6,8 +6,9 @@ DOWNLOAD:
   SAMPLING_INTERVAL: 1800      # WINDOW_TEST_LEN - WINDOW_ROLLING_LEN
 
 MODEL:
-  MODEL_LOCATION: 'model/pivalve-analytic-6.pt'
-  DEGRADATION_LIMIT: -7
+  MODEL_LOCATION: 'model/pivalve-analytic-7.pt'
+  WARNING_LIMIT: -7.5
+  ALARM_LIMIT: -10
 
 
 
